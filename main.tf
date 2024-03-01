@@ -124,6 +124,11 @@ resource "aws_sns_topic_subscription" "topico_producao_fifo_sqs_producao_fifo" {
   POLICY
 
   filter_policy_scope = "MessageBody"
+
+  depends_on = [
+    aws_sns_topic.topico_producao_fifo,
+    aws_sqs_queue.fila_producao_fifo
+  ]
 }
 
 resource "aws_sns_topic_subscription" "topico_producao_fifo_sqs_pedido_pronto_fifo" {
@@ -138,12 +143,22 @@ resource "aws_sns_topic_subscription" "topico_producao_fifo_sqs_pedido_pronto_fi
   POLICY
 
   filter_policy_scope = "MessageBody"
+
+  depends_on = [
+    aws_sns_topic.topico_producao_fifo,
+    aws_sqs_queue.fila_pedido_pronto_fifo
+  ]
 }
 
 resource "aws_sns_topic_subscription" "topico_pagamento_pendente_sqs_pagamento_pendente" {
   topic_arn = aws_sns_topic.topico_pagamento_pendente.arn
   protocol  = "sqs"
   endpoint  = aws_sqs_queue.fila_pagamento_pendente.arn
+
+  depends_on = [
+    aws_sns_topic.topico_pagamento_pendente,
+    aws_sqs_queue.fila_pagamento_pendente
+  ]
 }
 
 resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_aprovado" {
@@ -158,6 +173,11 @@ resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_ap
   POLICY
 
   filter_policy_scope = "MessageBody"
+
+  depends_on = [
+    aws_sns_topic.topico_pagamento_retorno,
+    aws_sqs_queue.fila_pagamento_aprovado
+  ]
 }
 
 resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_reprovado" {
@@ -172,6 +192,11 @@ resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_re
   POLICY
 
   filter_policy_scope = "MessageBody"
+
+  depends_on = [
+    aws_sns_topic.topico_pagamento_retorno,
+    aws_sqs_queue.fila_pagamento_reprovado
+  ]
 }
 
 resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_cancelado" {
@@ -186,4 +211,9 @@ resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_ca
   POLICY
 
   filter_policy_scope = "MessageBody"
+
+  depends_on = [
+    aws_sns_topic.topico_pagamento_retorno,
+    aws_sqs_queue.fila_pagamento_cancelado
+  ]
 }
