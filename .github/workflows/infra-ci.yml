@@ -1,16 +1,18 @@
-name: "Infra Create"
+name: "Infra CI"
 
 on:
-  push:
+  pull_request: 
+    types: [opened, synchronize]
     branches:
+      - develop
       - main
     paths:
       - "**.tf"
       - "**.tfvars"
-      - "infra-create.yml"
+      - "infra-ci.yml"
 
 jobs:
-  terraform-apply:
+  terraform-plan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -38,8 +40,4 @@ jobs:
 
       - name: Plan
         run: terraform plan
-        working-directory: "."
-
-      - name: Apply
-        run: terraform apply -auto-approve
         working-directory: "."
