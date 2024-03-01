@@ -1,10 +1,8 @@
-name: "Infra CI"
+name: "Infra Create"
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push:
     branches:
-      - develop
       - main
     paths:
       - "**.tf"

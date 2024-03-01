@@ -10,11 +10,11 @@ terraform {
     }
   }
 
-  # backend "s3" {
-  #   bucket = "tech-challenge-38"
-  #   key    = "infra-eventos-tech-challenge/eventos.tfstate"
-  #   region = "us-east-1"
-  # }
+  backend "s3" {
+    bucket = "tech-challenge-38"
+    key    = "infra-eventos-tech-challenge/eventos.tfstate"
+    region = "us-east-1"
+  }
 
   required_version = ">= 1.6.1"
 }
