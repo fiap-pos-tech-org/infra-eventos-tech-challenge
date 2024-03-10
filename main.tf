@@ -24,8 +24,8 @@ resource "aws_sqs_queue" "fila_pagamento_aprovado" {
   }
 }
 
-resource "aws_sqs_queue" "fila_pagamento_reprovado" {
-  name          = var.fila_pagamento_reprovado
+resource "aws_sqs_queue" "fila_pagamento_recusado" {
+  name          = var.fila_pagamento_recusado
   delay_seconds = 60
   policy        = data.aws_iam_policy_document.iam_sqs_send_policy.json
 
@@ -168,7 +168,7 @@ resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_ap
 
   filter_policy = <<POLICY
   {
-    "status": ["RECEBIDO"]
+    "status": ["PAGO"]
   }
   POLICY
 
@@ -180,14 +180,14 @@ resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_ap
   ]
 }
 
-resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_reprovado" {
+resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_recusado" {
   topic_arn = aws_sns_topic.topico_pagamento_retorno.arn
   protocol  = "sqs"
-  endpoint  = aws_sqs_queue.fila_pagamento_reprovado.arn
+  endpoint  = aws_sqs_queue.fila_pagamento_recusado.arn
 
   filter_policy = <<POLICY
   {
-    "status": ["FINALIZADO"]
+    "status": ["RECUSADO"]
   }
   POLICY
 
@@ -195,7 +195,7 @@ resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_re
 
   depends_on = [
     aws_sns_topic.topico_pagamento_retorno,
-    aws_sqs_queue.fila_pagamento_reprovado
+    aws_sqs_queue.fila_pagamento_recusado
   ]
 }
 
