@@ -18,9 +18,9 @@ variable "fila_pagamento_aprovado" {
   default = "fila_pagamento_aprovado"
 }
 
-variable "fila_pagamento_reprovado" {
+variable "fila_pagamento_recusado" {
   type    = string
-  default = "fila_pagamento_reprovado"
+  default = "fila_pagamento_recusado"
 }
 
 variable "fila_pagamento_cancelado" {
