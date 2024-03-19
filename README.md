@@ -4,7 +4,7 @@ Event-driven AWS resource terraform files
 #### Lista de recursos:
 ##### Filas
 - fila_pagamento_aprovado
-- fila_pagamento_reprovado
+- fila_pagamento_recusado
 - fila_pagamento_cancelado
 - fila_pedido_pronto.fifo
 - fila_producao.fifo
@@ -26,6 +26,6 @@ Event-driven AWS resource terraform files
 
 > topico_pagamento_retorno -> fila_pagamento_aprovado (pagamento status = "APROVADO")
 
-> topico_pagamento_retorno -> fila_pagamento_reprovado (pagamento status = "REPROVADO")
+> topico_pagamento_retorno -> fila_pagamento_recusado (pagamento status = "RECUSADO")
 
 > topico_pagamento_retorno -> fila_pagamento_cancelado (pagamento status = "CANCELADO")
