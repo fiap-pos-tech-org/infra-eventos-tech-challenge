@@ -168,7 +168,7 @@ resource "aws_sns_topic_subscription" "topico_pagamento_retorno_sqs_pagamento_ap
 
   filter_policy = <<POLICY
   {
-    "status": ["PAGO"]
+    "status": ["RECEBIDO"]
   }
   POLICY
 
